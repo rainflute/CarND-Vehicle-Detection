@@ -121,6 +121,7 @@ Here's an example result showing the heatmap from a series of frames of video, t
 * Processing time of each image was very long when I used ALL color channel for HOG, spatial, and color histogram features. Although the accuracy of the model is nearly 0.999, the trade off is too much. Only used one color channel in LUV color space
 
 * To minimize the search area, instead of search the full area of interest with different scales, I used different scale on differnt area depends on the distance from the camera.
+
 ![area](./output_images/area_of_interest.png)
 
 * The box size was jumping around, not stable. To better handle the boxes, I defined a car class that holds recent high confident detections, predict the new detection, igonore false detections, calculate the best box position, and make each frame more smooth.
