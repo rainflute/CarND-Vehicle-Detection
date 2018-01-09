@@ -63,7 +63,7 @@ Then I extract features and labels of all vehicles and non vehicle images.
 
 I defined a SVC classfier. I used grid_search.GridSearchCV to tune the parameters. The best combination of C and kernel is 10 and rbf 
 
-The final result of the prediction is 0.993
+The final result of the prediction is 0.9938
 
 ### Sliding Window Search
 
@@ -79,11 +79,11 @@ Since we will use the pipeline to process many images in a video, the pipeline o
 * Scale the image properly to draw on original image
     
 The window size is fixed, we need to scale the image, so that the box appears in different size when scaled back.
-The larger the scale is, the bigger the box is. So I start from 1, becasue 64*64 boxes is pretty small. The larger car will be around 100*100 in the image, so the max scale can be 2. 
+The larger the scale is, the bigger the box is. So I start from 1, becasue 64x64 boxes is pretty small. The larger car will be around 100x100 in the image, so the max scale can be 2. 
 
 #### 2. Show some examples of test images to demonstrate how your pipeline is working.  What did you do to optimize the performance of your classifier?
 
-Ultimately I searched on two scales using Grayscale features plus spatially binned color and histograms of color in the feature vector, which provided a nice result.  Here are some example images:
+Ultimately I searched the image with 3 different scales using Grayscale features plus spatially binned color and histograms of color in the feature vector, which provided a nice result.  Here are some example images:
 
 ![test_images](./output_images/test_images.png)
 ---
@@ -101,14 +101,14 @@ I recorded the positions of positive detections in each frame of the video.  Fro
 Here's an example result showing the heatmap from a series of frames of video, the result of `scipy.ndimage.measurements.label()` and the bounding boxes then overlaid on the last frame of video:
 
 ### Here are six frames and their corresponding heatmaps:
-![bboxes](./output_images/search_result.png)
+![boxes](./output_images/search_result.png)
 ![heap](./output_images/heapmap.png)
 
 ### Here is the output of `scipy.ndimage.measurements.label()` on the integrated heatmap from all six frames:
-![](./output_images/labels.png)
+![labels](./output_images/labels.png)
 
 ### Here the resulting bounding boxes are drawn onto all six frames:
-![result](./output_images/search_result.png)
+![result](./output_images/draw_box.png)
 
 
 
@@ -121,7 +121,7 @@ Here's an example result showing the heatmap from a series of frames of video, t
 * Processing time of each image was very long when I used ALL color channel for HOG, spatial, and color histogram features. Although the accuracy of the model is nearly 0.999, the trade off is too much. Only used one color channel in LUV color space
 
 * To minimize the search area, instead of search the full area of interest with different scales, I used different scale on differnt area depends on the distance from the camera.
-![area](.//output_images/area_of_interest.png)
+![area](./output_images/area_of_interest.png)
 
 * The box size was jumping around, not stable. To better handle the boxes, I defined a car class that holds recent high confident detections, predict the new detection, igonore false detections, calculate the best box position, and make each frame more smooth.
 
@@ -130,7 +130,7 @@ The current pipeline may not detect rapid position changes, for example, Hard br
 
 *More robust:*
 
-* Use multiple cameara
+* Use multiple cameras
 * Bird's eye view
 
 
